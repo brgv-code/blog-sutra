@@ -1,0 +1,104 @@
+import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
+// import { Providers } from "@/contexts/Providers";
+import { Toaster } from "react-hot-toast";
+import "@/styles/globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
+
+export const metadata: Metadata = {
+  title: {
+    default: "Sutra - Professional Note-Taking Platform",
+    template: "%s | Sutra",
+  },
+  description:
+    "The most advanced note-taking platform with AI assistance, multi-tenant support, and beautiful themes. Perfect for individuals and teams.",
+  keywords: [
+    "notes",
+    "markdown",
+    "obsidian",
+    "collaboration",
+    "ai",
+    "productivity",
+    "knowledge management",
+  ],
+  authors: [{ name: "Sutra Team" }],
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "Sutra",
+    title: "Sutra - Professional Note-Taking Platform",
+    description:
+      "The most advanced note-taking platform with AI assistance and collaboration features.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sutra",
+    description: "Professional note-taking platform for modern teams",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#1a1a1a" },
+  ],
+};
+
+// export default function RootLayout({
+//   children,
+// }: {
+//   children: React.ReactNode;
+// }) {
+//   return (
+//     <html lang="en" suppressHydrationWarning className={inter.variable}>
+//       <body
+//         className={`${inter.className} antialiased`}
+//         suppressHydrationWarning
+//       >
+//         <Providers>
+//           <div className="min-h-screen bg-background">{children}</div>
+//           <Toaster
+//             position="top-right"
+//             toastOptions={{
+//               duration: 4000,
+//               style: {
+//                 background: "rgb(var(--surface))",
+//                 color: "rgb(var(--foreground))",
+//                 border: "1px solid rgb(var(--border))",
+//               },
+//             }}
+//           />
+//         </Providers>
+//       </body>
+//     </html>
+//   );
+// }
+// app/layout.tsx
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>
+        {/* <Providers>{children}</Providers> */}
+        {children}
+      </body>
+    </html>
+  );
+}
