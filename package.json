@@ -1,5 +1,5 @@
 {
-  "name": "obsidian-enhanced-saas-complete",
+  "name": "blog-sutra",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -10,7 +10,8 @@
     "type-check": "tsc --noEmit",
     "db:generate": "supabase gen types typescript --local > src/types/supabase.ts",
     "db:migrate": "supabase migration up",
-    "stripe:listen": "stripe listen --forward-to localhost:3000/api/webhooks/stripe"
+    "stripe:listen": "stripe listen --forward-to localhost:3000/api/webhooks/stripe",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@apollo/server": "^5.0.0",
