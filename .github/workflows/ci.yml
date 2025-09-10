@@ -1,0 +1,36 @@
+# name: CI
+
+# on:
+#   push:
+#     branches: [main, graphql-nest-setup]
+#   pull_request:
+#     branches: [main, graphql-nest-setup]
+
+# jobs:
+#   build-and-test:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v3
+
+#       - name: Use Node.js 18
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: 18
+
+#       - name: Install dependencies
+#         run: npm ci
+#         working-directory: api
+
+#       - name: Generate Prisma Client
+#         run: npx prisma generate
+#         working-directory: api
+
+#       - name: Run tests
+#         run: npm run test
+#         working-directory: api
+
+#       - name: Build project
+#         run: npm run build
+#         working-directory: api
