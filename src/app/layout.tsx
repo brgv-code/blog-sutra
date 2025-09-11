@@ -1,8 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
-// import { Providers } from "@/contexts/Providers";
-import { Toaster } from "react-hot-toast";
 import "@/styles/globals.css";
+import { ApolloProviderWrapper } from "../lib/apollo/client";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -97,7 +96,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {/* <Providers>{children}</Providers> */}
-        {children}
+        <ApolloProviderWrapper>{children}</ApolloProviderWrapper>
       </body>
     </html>
   );
