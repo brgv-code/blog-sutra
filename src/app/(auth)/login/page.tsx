@@ -3,9 +3,15 @@
 import { signIn } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { LOGIN, ME } from "@/lib/apollo/operations";
+import { useMutation } from "@apollo/client";
 
 export default function Login() {
   const router = useRouter();
+  const [login, { loading, error: gError }] = useMutation(LOGIN, {
+    refetchQueries: [ME],
+  });
+
   const [error, setError] = useState<string | null>(null);
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -23,34 +29,35 @@ export default function Login() {
     } else {
       router.push("/dashboard");
     }
-  }
-  return (
-    <main className="max-w-md h-screen flex items-center justify-center flex-col mx-auto p-6 space-y-4 text-white">
-      <h1 className="text-2xl font-bold">Login</h1>
-      {error && <p className="text-red-500">{error}</p>}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          required
-          className="w-full rounded-md bg-neutral-900 border border-neutral-700 px-3 py-2"
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          required
-          className="w-full rounded-md bg-neutral-900 border border-neutral-700 px-3 py-2"
-        />
-        <button
-          type="submit"
-          className="w-full bg-white text-black font-medium rounded-md px-4 py-2 hover:bg-gray-200"
-        >
-          Sign In
-        </button>
-      </form>
-    </main>
-  );
+    return (
+      <main className="max-w-md h-screen flex items-center justify-center flex-col mx-auto p-6 space-y-4 text-white">
+        <h1 className="text-2xl font-bold">Login</h1>
+        {error && <p className="text-red-500">{error}</p>}
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            name="email"
+            type="email"
+            placeholder="Email"
+            required
+            className="w-full rounded-md bg-neutral-900 border border-neutral-700 px-3 py-2"
+          />
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            required
+            className="w-full rounded-md bg-neutral-900 border border-neutral-700 px-3 py-2"
+          />
+          <button
+            type="submit"
+            className="w-full bg-white text-black font-medium rounded-md px-4 py-2 hover:bg-gray-200"
+          >
+            Sign In
+          </button>
+        </form>
+      </main>
+    );
+  }
 }
