@@ -2,8 +2,15 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Mutation {
+  login(email: String!, password: String!): Boolean!
+  logout: Boolean!
+  register(email: String!, name: String, password: String!): Boolean!
+}
+
 type Query {
-  users: [User!]!
+  me: User
+  users: [User!]
 }
 
 type User {

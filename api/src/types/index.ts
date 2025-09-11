@@ -11,3 +11,9 @@ export class User {
   @Field({ nullable: true })
   name?: string;
 }
+
+@ObjectType()
+export class AuthPayload {
+  @Field(() => User) user!: User;
+  @Field() message!: string;
+}
