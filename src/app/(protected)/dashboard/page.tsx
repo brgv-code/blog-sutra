@@ -3,11 +3,16 @@
 import { useRouter } from "next/navigation";
 import { useSession, signOut } from "@/lib/auth-client";
 import { useEffect } from "react";
-
+import { useQuery } from "@apollo/client";
+import { User } from "@/types/index";
+import { ME } from "@/store/UserStore/UserStore.graphql";
 export default function Dashboard() {
   const router = useRouter();
   const { data: session, isPending } = useSession();
-
+  const { data, loading } = useQuery<{ me: User }>(ME, {
+    fetchPolicy: "no-cache",
+  });
+  console.log(data, "User");
   useEffect(() => {
     if (!isPending && !session?.user) {
       router.push("/sign-in");

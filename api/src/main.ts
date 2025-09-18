@@ -4,7 +4,7 @@ import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import cookieParser from "cookie-parser";
-
+import { SecurityMiddleware } from "./security/security.service";
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {});
 
@@ -23,7 +23,7 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("docs", app, document);
-
+  app.use(new SecurityMiddleware().use);
   await app.listen(3001);
 
   console.log("🚀 Server running at http://localhost:3001/graphql");

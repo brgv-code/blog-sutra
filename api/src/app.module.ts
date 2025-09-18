@@ -4,6 +4,7 @@ import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { PrismaModule } from "./prisma/prisma.module";
 import { UserModule } from "./user/user.module";
 import { AppController } from "./app.controller";
+import { AuthModule } from "./auth/auth.module";
 import { AppService } from "./app.service";
 import { join } from "path";
 import { ConfigModule } from "@nestjs/config";
@@ -25,6 +26,7 @@ import { ConfigModule } from "@nestjs/config";
     }),
     PrismaModule,
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

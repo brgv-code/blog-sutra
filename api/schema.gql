@@ -6,6 +6,8 @@ type Mutation {
   login(email: String!, password: String!): Boolean!
   logout: Boolean!
   register(email: String!, name: String, password: String!): Boolean!
+  requestPasswordReset(email: String!): Boolean!
+  resetPassword(newPassword: String!, token: String!): Boolean!
 }
 
 type Query {
