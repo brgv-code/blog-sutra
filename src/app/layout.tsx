@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "@/styles/globals.css";
 import { ApolloProviderWrapper } from "../lib/apollo/client";
-
+import { ToastProvider } from "@/ui/toast";
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
@@ -56,37 +56,6 @@ export const viewport: Viewport = {
   ],
 };
 
-// export default function RootLayout({
-//   children,
-// }: {
-//   children: React.ReactNode;
-// }) {
-//   return (
-//     <html lang="en" suppressHydrationWarning className={inter.variable}>
-//       <body
-//         className={`${inter.className} antialiased`}
-//         suppressHydrationWarning
-//       >
-//         <Providers>
-//           <div className="min-h-screen bg-background">{children}</div>
-//           <Toaster
-//             position="top-right"
-//             toastOptions={{
-//               duration: 4000,
-//               style: {
-//                 background: "rgb(var(--surface))",
-//                 color: "rgb(var(--foreground))",
-//                 border: "1px solid rgb(var(--border))",
-//               },
-//             }}
-//           />
-//         </Providers>
-//       </body>
-//     </html>
-//   );
-// }
-// app/layout.tsx
-
 export default function RootLayout({
   children,
 }: {
@@ -95,8 +64,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {/* <Providers>{children}</Providers> */}
         <ApolloProviderWrapper>{children}</ApolloProviderWrapper>
+        <ToastProvider />
       </body>
     </html>
   );

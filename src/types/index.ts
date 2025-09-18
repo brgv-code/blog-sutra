@@ -4,3 +4,8 @@ export interface Feature {
   description: string;
   gradient: string;
 }
+export interface User {
+  id: string;
+  email: string;
+  name?: string | null;
+}
