@@ -6,6 +6,7 @@ import { ErrorCodes } from "../../common/errors/error-code";
 
 @Injectable()
 export class EmailService {
+  //need to setup auto refresh token for google api to avoid invalid_grant error
   constructor(private readonly mailer: MailerService) {}
   async sendPasswordResetEmail(email: string, resetLink: string) {
     const fromAddress =

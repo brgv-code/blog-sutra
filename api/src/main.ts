@@ -16,8 +16,8 @@ async function bootstrap() {
   app.use(cookieParser());
   app.useBodyParser("json", { limit: "10mb" });
   const config = new DocumentBuilder()
-    .setTitle("LouraAPI")
-    .setDescription("API for the Loura App")
+    .setTitle("SutraAPI")
+    .setDescription("API for the Sutra App")
     .setVersion("0.1")
     .build();
 

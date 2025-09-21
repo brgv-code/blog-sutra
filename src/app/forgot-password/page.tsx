@@ -29,9 +29,7 @@ export default function ForgotPasswordPage() {
     e.preventDefault();
     try {
       await requestReset({ variables: { email } });
-      try {
-        localStorage.setItem("lastResetEmail", email);
-      } catch {}
+      localStorage.setItem("lastResetEmail", email);
       setSuccess(true);
       toast.success("If that email exists, we’ve sent reset instructions.");
     } catch (err: any) {

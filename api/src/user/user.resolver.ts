@@ -1,6 +1,5 @@
 import { Resolver, Query, Mutation, Args, Context } from "@nestjs/graphql";
 import { Response, Request } from "express";
-import { auth } from "../auth/betterauth";
 import { User } from "../types";
 import { UserService } from "./user.service";
 
@@ -25,12 +24,9 @@ export class UserResolver {
     @Args("name", { nullable: true }) name: string,
     @Context() ctx: { res: Response }
   ) {
-    const { sessionToken } = await this.userService.register(
-      email,
-      password,
-      name
-    );
-    ctx.res.cookie("sid", sessionToken, {
+    const token = await this.userService.register(email, password, name);
+
+    ctx.res.cookie("sid", token, {
       httpOnly: true,
       sameSite: "lax",
       secure: false,
@@ -45,8 +41,8 @@ export class UserResolver {
     @Args("password") password: string,
     @Context() ctx: { res: Response }
   ) {
-    const { sessionToken } = await this.userService.login(email, password);
-    ctx.res.cookie("sid", sessionToken, {
+    const token = await this.userService.login(email, password);
+    ctx.res.cookie("sid", token, {
       httpOnly: true,
       sameSite: "lax",
       secure: process.env.NODE_ENV === "production",
