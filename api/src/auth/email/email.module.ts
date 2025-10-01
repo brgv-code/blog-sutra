@@ -10,21 +10,13 @@ import { google } from "googleapis";
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (cfg: ConfigService): Promise<MailerOptions> => {
-        const provider = (
-          cfg.get<string>("EMAIL_PROVIDER") || "SMTP"
-        ).toUpperCase();
+        const provider = cfg.get<string>("EMAIL_PROVIDER") || "SMTP";
 
         if (provider === "GMAIL") {
           const user = cfg.get<string>("GMAIL_USER")?.trim();
           const clientId = cfg.get<string>("GMAIL_CLIENT_ID")?.trim();
           const clientSecret = cfg.get<string>("GMAIL_CLIENT_SECRET")?.trim();
           const refreshToken = cfg.get<string>("GMAIL_REFRESH_TOKEN")?.trim();
-          console.log({
-            user: cfg.get("GMAIL_USER"),
-            clientId: cfg.get("GMAIL_CLIENT_ID"),
-            clientSecret: cfg.get("GMAIL_CLIENT_SECRET"),
-            refreshToken: cfg.get("GMAIL_REFRESH_TOKEN"),
-          });
 
           if (!user || !clientId || !clientSecret || !refreshToken) {
             throw new Error(
@@ -32,13 +24,11 @@ import { google } from "googleapis";
             );
           }
 
-          let accessToken = cfg.get("GMAIL_ACCESS_TOKEN");
-          if (!accessToken) {
-            const oauth2 = new google.auth.OAuth2(clientId, clientSecret);
-            oauth2.setCredentials({ refresh_token: refreshToken });
-            const { token } = await oauth2.getAccessToken();
-            accessToken = token || undefined;
-          }
+          const oauth2Client = new google.auth.OAuth2(clientId, clientSecret);
+          oauth2Client.setCredentials({ refresh_token: refreshToken });
+
+          const { token } = await oauth2Client.getAccessToken();
+          const accessToken: string | undefined = token ?? undefined;
           return {
             transport: {
               service: "gmail",
@@ -53,14 +43,15 @@ import { google } from "googleapis";
                 refreshToken,
                 accessToken,
               },
-              connectionTimeout: 5000,
+              connectionTimeout: 10000,
               greetingTimeout: 5000,
-              socketTimeout: 10000,
+              socketTimeout: 15000,
             },
             defaults: { from: cfg.get<string>("FROM") || user },
           };
         }
 
+        // SMTP fallback
         return {
           transport: {
             host: cfg.get<string>("SMTP_HOST"),
